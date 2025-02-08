@@ -15,7 +15,7 @@ Accepts a video file in `.mov` format for conversion.
 
 **Example Request (cURL):**
 
-*   curl -X POST -F "video=@/path/to/your/video.mov" http://your-server.com/upload
+*   curl -X POST -F "video=@/path/to/your/video.mov" http://localhost:3000/upload
 
 **Example Response (JSON):**
 
@@ -37,7 +37,7 @@ Accepts a video file in `.mov` format for conversion.
 
 **Example Request (cURL):**
 
-*   curl -O http://your-server.com/download/converted_video.mp4
+*   curl -O http://localhost:3000/download/converted_video.mp4
 
 **Response Codes:**
 
@@ -107,7 +107,7 @@ Accepts a video file in `.mov` format for conversion.
 
 **Пример запроса (cURL):**
 
-*   curl -X POST -F "video=@/path/to/your/video.mov" http://your-server.com/upload
+*   curl -X POST -F "video=@/path/to/your/video.mov" http://localhost:3000/upload
 
 **Пример ответа (JSON):**
 
@@ -130,7 +130,7 @@ Accepts a video file in `.mov` format for conversion.
 
 **Пример запроса (cURL):**
 
-*   curl -O http://your-server.com/download/converted_video.mp4
+*   curl -O http://localhost:3000/download/converted_video.mp4
 
 **Коды ответов:**
 
@@ -179,6 +179,3 @@ Accepts a video file in `.mov` format for conversion.
 *   .env
 *   !uploads/.gitkeep
 *   !converted/.gitkeep
-
-
-
