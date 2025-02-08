@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/script.js" defer></script>
+    <title>Video Converter</title>
+</head>
+<body>
+    <div class="hex-grid">
+        <div class="hex-container"></div>
+    </div>
+    
+    <div class="container">
+        <h2>MOV to MP4 Converter</h2>
+        <form id="uploadForm">
+            <div class="buttons-container">
+                <label class="custom-file-input">
+                    Select MOV File
+                    <input type="file" name="video" accept=".mov" class="hidden-input" id="fileInput">
+                </label>
+                <button type="submit" id="convertButton">Convert Video</button>
+                <div class="loader"></div>
+                <button type="button" id="downloadButton" class="download-button">Download Video</button>
+            </div>
+            <div class="file-status">No file selected</div>
+        </form>
+    </div>
+</body>
+</html>

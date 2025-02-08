@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap');
+
+:root {
+    --m: 2rem;
+    --red: #FF6565;
+    --pink: #FF64F9;
+    --purple: #6B5FFF;
+    --blue: #4D8AFF;
+    --green: #5BFF89;
+    --yellow: #FFEE55;
+    --orange: #FF6D1B;
+}
+
+.hex-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hex-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.hexagon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    position: relative;
+}
+
+.hexagon-line {
+    position: absolute;
+    width: 27px;
+    height: 2.3px;
+    background: rgba(150, 150, 150, 0.3);
+    transform-origin: left center;
+    transition: all 0.8s;
+    animation: pulse 3s infinite;
+}
+
+.hexagon-line:nth-child(odd) { background: rgba(150, 150, 150, 0.4); }
+.hexagon-line:nth-child(even) { animation-delay: 0s; }
+.hexagon-line:nth-child(1) { transform: rotate(0deg); }
+.hexagon-line:nth-child(2) { transform: rotate(60deg); }
+.hexagon-line:nth-child(3) { transform: rotate(120deg); }
+.hexagon-line:nth-child(4) { transform: rotate(180deg); }
+.hexagon-line:nth-child(5) { transform: rotate(240deg); }
+.hexagon-line:nth-child(6) { transform: rotate(300deg); }
+.hexagon-line:nth-child(3n) { background: rgba(150, 150, 150, 0.25); }
+
+.hexagon-line::before {
+    content: '';
+    position: absolute;
+    width: 150%; /* Увеличиваем ширину */
+    height: 20px;
+    top: -8px;
+    left: -25%; /* Сдвигаем влево для центрирования */
+}
+
+.hexagon-line:hover {
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    transition: all 0s;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #131313;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+h2 {
+    font-family: 'Space Grotesk';
+    color: #F3F3F3;
+    font-size: calc(var(--m) * 0.8);
+    margin-bottom: 30px;
+}
+
+.container {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+    max-width: 500px;
+    padding: 20px;
+}
+
+.custom-file-input, button {
+    border: calc(0.08 * var(--m)) solid transparent;
+    position: relative;
+    color: #F3F3F3;
+    font-family: 'Space Grotesk';
+    font-size: calc(var(--m) * 0.5);
+    border-radius: calc(0.7 * var(--m));
+    padding: calc(0.3 * var(--m)) calc(0.8 * var(--m));
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.file-status {
+    margin-top: 10px;
+    color: #666;
+    font-size: 14px;
+    text-align: left;
+    margin-left: 20px;
+    font-family: 'Space Grotesk';
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.download-button {
+    display: none;
+    border: calc(0.08 * var(--m)) solid transparent;
+    position: relative;
+    color: #F3F3F3;
+    font-family: 'Space Grotesk';
+    font-size: calc(var(--m) * 0.5);
+    border-radius: calc(0.7 * var(--m));
+    padding: calc(0.3 * var(--m)) calc(0.8 * var(--m));
+    cursor: pointer;
+    min-width: 120px;
+    background: linear-gradient(#121213, #121213), 
+                linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),  
+                linear-gradient(90deg, var(--green), #2ecc71, #27ae60, var(--green));
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+    background-size: 200%;
+    animation: animate 2s infinite linear;
+}
+
+.converting {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.custom-file-input, #convertButton {
+    background: linear-gradient(#121213, #121213), 
+                linear-gradient(#121213 50%, rgba(18, 18, 19, 0.6) 80%, rgba(18, 18, 19, 0)),  
+                linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+    background-origin: border-box;
+    background-clip: padding-box, border-box, border-box;
+    background-size: 200%;
+    animation: animate 2s infinite linear;
+}
+
+.custom-file-input::before, #convertButton::before {
+    content: '';
+    background: linear-gradient(90deg, var(--orange), var(--yellow), var(--green), var(--blue), var(--purple), var(--pink), var(--red));
+    height: 30%;
+    width: 60%;
+    position: absolute;
+    bottom: -20%;
+    z-index: -5;
+    background-size: 200%;
+    animation: animate 2s infinite linear;
+    filter: blur(calc(0.8 * var(--m)));
+}
+
+.custom-file-input:hover, .custom-file-input:hover::before,
+#convertButton:hover, #convertButton:hover::before {
+    animation: animate 0.5s infinite linear;
+}
+
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 2px;
+    background: #ffffff;
+    pointer-events: none;
+    animation: spark-animation 0.6s ease-out forwards;
+}
+
+.loader {
+    position: relative;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.loader::before,
+.loader::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    animation-duration: 1.8s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    filter: drop-shadow(0 0 11px rgba(255, 255, 255, 0.75));
+}
+
+.loader::before {
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 17px #fff;
+    animation-name: pulsA;
+}
+
+.loader::after {
+    width: calc(100% - 34px);
+    height: calc(100% - 34px);
+    box-shadow: 0 0 0 0 #fff;
+    animation-name: pulsB;
+}
+
+@keyframes animate {
+    0% {background-position: 0}
+    100% {background-position: 200%}
+}
+
+@keyframes gotop {
+    to { transform: translate3d(0, -50%, 0); }
+}
+
+@keyframes gobott {
+    to { transform: translate3d(0, 50%, 0); }
+}
+
+@keyframes spark-animation {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--dx), var(--dy)) scale(0.3);
+        opacity: 0;
+    }
+}
+
+@keyframes pulsA {
+    0% {
+        box-shadow: inset 0 0 0 17px #fff;
+        opacity: 1;
+    }
+    50%, 100% {
+        box-shadow: inset 0 0 0 0 #fff;
+        opacity: 0;
+    }
+}
+
+@keyframes pulsB {
+    0%, 50% {
+        box-shadow: 0 0 0 0 #fff;
+        opacity: 0;
+    }
+    100% {
+        box-shadow: 0 0 0 17px #fff;
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% { opacity: 0.2; }
+    30% { opacity: 0.4; }
+    70% { opacity: 0.3; }
+    100% { opacity: 0.2; }
+}
